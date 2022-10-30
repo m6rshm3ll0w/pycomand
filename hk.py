@@ -31,7 +31,6 @@ while s < 0 or s > 59:
 
 while p < 0 or p > 1000:
     p = int(input("Воины золотого штата: "))
-    q = int(input("Востон Келтикс: "))
     if p < 0 or p > 1000:
         print("введите значение от 0 до 1000.")
     else:
@@ -46,60 +45,36 @@ while q < 0 or q > 1000:
 i = 2
 a = 1
 
-if s > 0:
-    m = 47 - m
-    s = 60 - s
+t = 2880 - m * 60 - s
 
-else:
-    m = 48 - m
-
-print(m, s)
+print(t)
 
 print("|#  |Атакующая команда    |Время   |Счёт       |")
 run = True
 while run:
-    if i % 2 == 0:  # атака Воины золотого штата p
+    if i == 2 and s >= 24:  # атака Воины золотого штата p
         print("ВЗС")
-        if s >= 24 and m > 0:
+        s -= 24
+        p += 3
+        i -= 1
+        print(i, "ВЗС")
+        score(m, s, p, q, i)
+    if i == 1 and s >= 24:  # атака Востон Келтикс_q
+        if a == 1:  # удача
             s -= 24
-            p += 3
+            q += 2
             i += 1
+            a += 1
+            print(i, "Вk")
             score(m, s, p, q, i)
-        if m > 0 and s < 24:
-            m -= 1
-            s = s + 60 - 24
-            p += 3
-            i += 1
+        if a == 2:  # поражение
+            s -= 24
+            q += 2
+            i -= 1
+            a -= 1
+            print(i, "Вk")
             score(m, s, p, q, i)
-        if m == 0 and s < 24:
-            break
-    if i % 2 != 0:  # атака Востон Келтикс_q
-        print("ВК")
-        if a % 2 != 0:  # удача
-            if s >= 24 and m > 0:
-                s -= 24
-                q += 2
-                i -= 1
-                score(m, s, p, q, i)
-            if m > 0 and s < 24:
-                m -= 1
-                s = s + 60 - 24
-                q += 2
-                i -= 1
-                score(m, s, p, q, i)
-            if m == 0 and s < 24:
-                break
-        if a % 2 == 0:  # поражение
-            if s >= 24 and m > 0:
-                s -= 24
-                q += 2
-                i -= 1
-                score(m, s, p, q, i)
-            if m > 0 and s < 24:
-                m -= 1
-                s = s + 60 - 24
-                q += 2
-                i -= 1
-                score(m, s, p, q, i)
-            if m == 0 and s < 24:
-                break
+
+    if s < 24:
+        score(m, s, p, q, i)
+        break
